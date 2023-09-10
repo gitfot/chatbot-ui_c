@@ -1,11 +1,11 @@
 import { useMemo, useReducer } from 'react';
 
-// Extracts property names from initial state of reducer to allow typesafe dispatch objects
+//FieldNames用于获取一个类型T中的所有字符串字段名。
 export type FieldNames<T> = {
   [K in keyof T]: T[K] extends string ? K : K;
 }[keyof T];
 
-// Returns the Action Type for the dispatch object to be used for typing in things like context
+//ActionType用于定义一个redux action的类型
 export type ActionType<T> =
   | { type: 'reset' }
   | { type?: 'change'; field: FieldNames<T>; value: any };
@@ -25,6 +25,6 @@ export const useCreateReducer = <T>({ initialState }: { initialState: T }) => {
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  // todo 这行代码使用useMemo似乎是不必要的
   return useMemo(() => ({ state, dispatch }), [state, dispatch]);
 };
