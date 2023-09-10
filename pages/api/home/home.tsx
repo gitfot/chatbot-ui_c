@@ -180,6 +180,7 @@ const Home = ({
 
 	// CONVERSATION OPERATIONS  --------------------------------------------
 
+	//创建一个新的对话框
 	const handleNewConversation = () => {
 		const lastConversation = conversations[conversations.length - 1];
 
@@ -209,6 +210,7 @@ const Home = ({
 		dispatch({field: 'loading', value: false});
 	};
 
+	//更新对话框
 	const handleUpdateConversation = (
 		conversation: Conversation,
 		data: KeyValuePair,
@@ -238,11 +240,13 @@ const Home = ({
 	useEffect(() => {
 		defaultModelId &&
 		dispatch({field: 'defaultModelId', value: defaultModelId});
+
 		serverSideApiKeyIsSet &&
 		dispatch({
 			field: 'serverSideApiKeyIsSet',
 			value: serverSideApiKeyIsSet,
 		});
+
 		serverSidePluginKeysSet &&
 		dispatch({
 			field: 'serverSidePluginKeysSet',
@@ -253,6 +257,7 @@ const Home = ({
 	// ON LOAD --------------------------------------------
 
 	useEffect(() => {
+		//获取主题
 		const settings = getSettings();
 		if (settings.theme) {
 			dispatch({
