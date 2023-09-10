@@ -38,12 +38,13 @@ interface Props {
 	stopConversationRef: MutableRefObject<boolean>;
 }
 
+//使用memo可以保证props变化时才会重新渲染包装的组件
 export const Chat = memo(({stopConversationRef}: Props) => {
 	const {t} = useTranslation('chat');
 
 	const {
 		state: {
-			selectedConversation,
+			selectedConversation, //目标对话框
 			conversations,
 			models,
 			apiKey,
@@ -56,7 +57,7 @@ export const Chat = memo(({stopConversationRef}: Props) => {
 		},
 		handleUpdateConversation,
 		dispatch: homeDispatch,
-	} = useContext(HomeContext);
+	} = useContext(HomeContext); //对话框上下文
 
 	const [currentMessage, setCurrentMessage] = useState<Message>();
 	const [autoScrollEnabled, setAutoScrollEnabled] = useState<boolean>(true);
@@ -68,11 +69,16 @@ export const Chat = memo(({stopConversationRef}: Props) => {
 	const chatContainerRef = useRef<HTMLDivElement>(null);
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+	/**
+	 * 消息发送方法
+	 */
 	const handleSend = useCallback(
 		async (message: Message, deleteCount = 0, plugin: Plugin | null = null) => {
 			if (selectedConversation) {
 				let updatedConversation: Conversation;
+				//删除指定条数的消息(控制发送的历史消息数)
 				if (deleteCount) {
+					//获取当前对话框内的全部消息
 					const updatedMessages = [...selectedConversation.messages];
 					for (let i = 0; i < deleteCount; i++) {
 						updatedMessages.pop();
@@ -81,18 +87,21 @@ export const Chat = memo(({stopConversationRef}: Props) => {
 						...selectedConversation,
 						messages: [...updatedMessages, message],
 					};
+				//插入新的消息
 				} else {
 					updatedConversation = {
 						...selectedConversation,
 						messages: [...selectedConversation.messages, message],
 					};
 				}
+				//更新selectedConversation字段
 				homeDispatch({
 					field: 'selectedConversation',
 					value: updatedConversation,
 				});
 				homeDispatch({field: 'loading', value: true});
 				homeDispatch({field: 'messageIsStreaming', value: true});
+				//发送的消息体
 				const chatBody: ChatBody = {
 					model: updatedConversation.model,
 					messages: updatedConversation.messages,
@@ -100,6 +109,7 @@ export const Chat = memo(({stopConversationRef}: Props) => {
 					prompt: updatedConversation.prompt,
 					temperature: updatedConversation.temperature,
 				};
+				//获取send url
 				const endpoint = getEndpoint(plugin);
 				let body;
 				if (!plugin) {
@@ -124,12 +134,14 @@ export const Chat = memo(({stopConversationRef}: Props) => {
 					signal: controller.signal,
 					body,
 				});
+				//如果响应失败
 				if (!response.ok) {
 					homeDispatch({field: 'loading', value: false});
 					homeDispatch({field: 'messageIsStreaming', value: false});
 					toast.error(response.statusText);
 					return;
 				}
+				//如果响应数据为空
 				const data = response.body;
 				if (!data) {
 					homeDispatch({field: 'loading', value: false});
@@ -137,8 +149,10 @@ export const Chat = memo(({stopConversationRef}: Props) => {
 					return;
 				}
 				if (!plugin) {
+					// 如果messages条数为1
 					if (updatedConversation.messages.length === 1) {
 						const {content} = message;
+						//截取30以内字符作为本次对话的名称
 						const customName =
 							content.length > 30 ? content.substring(0, 30) + '...' : content;
 						updatedConversation = {
@@ -147,13 +161,16 @@ export const Chat = memo(({stopConversationRef}: Props) => {
 						};
 					}
 					homeDispatch({field: 'loading', value: false});
+					//获取响应流
 					const reader = data.getReader();
 					const decoder = new TextDecoder();
 					let done = false;
-					let isFirst = true;
+					let isFirst = true; //是否是第一个响应流中的字符
 					let text = '';
+					//处理响应流
 					while (!done) {
-						if (stopConversationRef.current === true) {
+						//手动停止响应流
+						if (stopConversationRef.current) {
 							controller.abort();
 							done = true;
 							break;
@@ -162,12 +179,15 @@ export const Chat = memo(({stopConversationRef}: Props) => {
 						done = doneReading;
 						const chunkValue = decoder.decode(value);
 						text += chunkValue;
+						//如果是响应流中返回了第一个字符
 						if (isFirst) {
 							isFirst = false;
+							//插入一条新的消息
 							const updatedMessages: Message[] = [
 								...updatedConversation.messages,
 								{role: 'assistant', content: chunkValue},
 							];
+							//更新消息
 							updatedConversation = {
 								...updatedConversation,
 								messages: updatedMessages,
@@ -176,15 +196,19 @@ export const Chat = memo(({stopConversationRef}: Props) => {
 								field: 'selectedConversation',
 								value: updatedConversation,
 							});
-						} else {
+						} else {//如果是响应流中的后续字符
+							//更新消息
 							const updatedMessages: Message[] =
 								updatedConversation.messages.map((message, index) => {
+									//如果是最后一条消息，也就是本次对话中GPT返回的消息
 									if (index === updatedConversation.messages.length - 1) {
+										//刷新消息内容
 										return {
 											...message,
 											content: text,
 										};
 									}
+									//前面的消息直接返回
 									return message;
 								});
 							updatedConversation = {
@@ -197,19 +221,24 @@ export const Chat = memo(({stopConversationRef}: Props) => {
 							});
 						}
 					}
+					//响应流完成保存当前消息到本地缓存
 					saveConversation(updatedConversation);
+					//获取全部的消息
 					const updatedConversations: Conversation[] = conversations.map(
 						(conversation) => {
+							//更新当前对话框中的消息
 							if (conversation.id === selectedConversation.id) {
 								return updatedConversation;
 							}
 							return conversation;
 						},
 					);
+					//如果是首次发送消息
 					if (updatedConversations.length === 0) {
 						updatedConversations.push(updatedConversation);
 					}
 					homeDispatch({field: 'conversations', value: updatedConversations});
+					//保存所有对话框消息到本地缓存
 					saveConversations(updatedConversations);
 					homeDispatch({field: 'messageIsStreaming', value: false});
 				} else {
