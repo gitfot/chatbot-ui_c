@@ -52,6 +52,10 @@ export const cleanSelectedConversation = (conversation: Conversation) => {
   return updatedConversation;
 };
 
+/**
+ * 消息窗口清洗方法（确保字段包含正确的参数）
+ * @param history
+ */
 export const cleanConversationHistory = (history: any[]): Conversation[] => {
   // added model for each conversation (3/20/23)
   // added system prompt for each conversation (3/21/23)

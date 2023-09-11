@@ -310,20 +310,22 @@ const Home = ({
 		}
 
 		const conversationHistory = localStorage.getItem('conversationHistory');
+		//将本地的消息窗口列表更新到store
 		if (conversationHistory) {
 			const parsedConversationHistory: Conversation[] =
 				JSON.parse(conversationHistory);
+			//参数检测
 			const cleanedConversationHistory = cleanConversationHistory(
 				parsedConversationHistory,
 			);
-
 			dispatch({field: 'conversations', value: cleanedConversationHistory});
 		}
-
+		//将本地的所选消息窗口更新到store
 		const selectedConversation = localStorage.getItem('selectedConversation');
 		if (selectedConversation) {
 			const parsedSelectedConversation: Conversation =
 				JSON.parse(selectedConversation);
+			//参数检测
 			const cleanedSelectedConversation = cleanSelectedConversation(
 				parsedSelectedConversation,
 			);
@@ -367,7 +369,7 @@ const Home = ({
 			}}
 		>
 			<Head>
-				<title>Chatbot UI</title>
+				<title>Gen2AI</title>
 				<meta name="description" content="ChatGPT but better."/>
 				<meta
 					name="viewport"
