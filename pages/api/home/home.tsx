@@ -404,6 +404,7 @@ const Home = ({
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async ({locale}) => {
+	//defaultModelId默认为 gpt-3.5-turbo
 	const defaultModelId =
 		(process.env.DEFAULT_MODEL &&
 			Object.values(OpenAIModelID).includes(
@@ -412,6 +413,7 @@ export const getServerSideProps: GetServerSideProps = async ({locale}) => {
 			process.env.DEFAULT_MODEL) ||
 		fallbackModelID;
 
+	//是否支持googleApi插件
 	let serverSidePluginKeysSet = false;
 
 	const googleApiKey = process.env.GOOGLE_API_KEY;
@@ -437,3 +439,4 @@ export const getServerSideProps: GetServerSideProps = async ({locale}) => {
 		},
 	};
 };
+

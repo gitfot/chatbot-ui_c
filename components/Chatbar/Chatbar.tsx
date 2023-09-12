@@ -27,7 +27,7 @@ import {ChatbarInitialState, initialState} from './Chatbar.state';
 import {v4 as uuidv4} from 'uuid';
 
 /**
- *
+ * 左边栏组件
  * @constructor
  */
 export const Chatbar = () => {
@@ -50,7 +50,7 @@ export const Chatbar = () => {
 		dispatch: chatDispatch,
 	} = chatBarContextValue;
 
-	//
+	//修改api key方法
 	const handleApiKeyChange = useCallback(
 		(apiKey: string) => {
 			homeDispatch({field: 'apiKey', value: apiKey});
@@ -116,6 +116,9 @@ export const Chatbar = () => {
 		window.location.reload();
 	};
 
+	/**
+	 * 清空所有对话窗口（已废弃）
+	 */
 	const handleClearConversations = () => {
 		defaultModelId &&
 		homeDispatch({
@@ -142,6 +145,10 @@ export const Chatbar = () => {
 		saveFolders(updatedFolders);
 	};
 
+	/**
+	 * 删除一个对话框
+	 * @param conversation
+	 */
 	const handleDeleteConversation = (conversation: Conversation) => {
 		const updatedConversations = conversations.filter(
 			(c) => c.id !== conversation.id,
@@ -216,7 +223,6 @@ export const Chatbar = () => {
 			value={{
 				...chatBarContextValue,
 				handleDeleteConversation,
-				handleClearConversations,
 				handleImportConversations,
 				handleExportData,
 				handlePluginKeyChange,
