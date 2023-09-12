@@ -1,0 +1,80 @@
+.conversationItem {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.renameItem {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 0.75rem;
+    border-radius: 0.5rem;
+    background-color: rgba(254, 254, 255, 0.9);
+    padding: 0.75rem;
+}
+
+.renameItemInput {
+    margin-right: 3rem;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-color: rgb(163 163 163 / 1);
+    background-color: transparent;
+    text-align: left;
+    font-size: 12.5px;
+    line-height:  .75rem;
+    color: rgb(52 53 65 / 0.9);;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+
+    &:focus {
+        border-color: #d4d4d8;
+    }
+}
+
+.normalItem {
+    display: flex;
+    width: 100%;
+    cursor: pointer;
+    align-items: center;
+    gap: 0.75rem;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+
+    &:hover {
+        background-color: rgb(52 53 65 / 0.9);; //rgb(52 53 65 / 0.9);
+    }
+}
+
+.normalItemSelected {
+    background-color: rgb(52 53 65 / 0.9);;
+}
+
+.normalItemDisabled {
+    cursor: not-allowed;
+}
+
+.itemMessage {
+    position: relative;
+    max-height: 1.25rem;
+    flex: 1 1 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+    text-align: left;
+    font-size: 12.5px;
+    line-height: 0.75rem;;
+}
+
+.deleteItemSelected {
+    padding-right: 12px;
+}
+
