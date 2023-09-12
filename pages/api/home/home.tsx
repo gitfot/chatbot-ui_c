@@ -40,6 +40,7 @@ import HomeContext from './home.context';
 import {HomeInitialState, initialState} from './home.state';
 
 import {v4 as uuidv4} from 'uuid';
+import styles from './home.module.scss'
 
 interface Props {
 	serverSideApiKeyIsSet: boolean;
@@ -378,20 +379,18 @@ const Home = ({
 				<link rel="icon" href="/favicon.ico"/>
 			</Head>
 			{selectedConversation && (
-				<main
-					className={`flex h-screen w-screen flex-col text-sm text-white dark:text-white ${lightMode}`}
-				>
-					<div className="fixed top-0 w-full sm:hidden">
+				<main className={styles.container}>
+					<div className={styles.mobileNav}>
 						<Navbar
 							selectedConversation={selectedConversation}
 							onNewConversation={handleNewConversation}
 						/>
 					</div>
 
-					<div className="flex h-full w-full pt-[48px] sm:pt-0">
+					<div className={styles.windowContent}>
 						<Chatbar/>
 
-						<div className="flex flex-1">
+						<div className={styles.chatContainer}>
 							<Chat stopConversationRef={stopConversationRef}/>
 						</div>
 

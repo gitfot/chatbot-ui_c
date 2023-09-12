@@ -8,6 +8,12 @@ interface Props {
   onNewConversation: () => void;
 }
 
+/**
+ * 手机端的聊天框顶部bar
+ * @param selectedConversation
+ * @param onNewConversation
+ * @constructor
+ */
 export const Navbar: FC<Props> = ({
   selectedConversation,
   onNewConversation,
