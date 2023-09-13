@@ -1,0 +1,20 @@
+.sidebar-button {
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  user-select: none;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.375rem;
+  padding: 0.75rem 0.75rem;
+  font-size: 14px;
+  line-height: .75rem;
+  color: var(--font-color);
+  transition-property: background-color;
+  transition-duration: 200ms;
+  background-color: var(--theme-color);
+
+  &:hover {
+    background-color: var(--backgroud-hover)
+  }
+}

@@ -1,0 +1,37 @@
+.container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.prompt-item {
+    display: flex;
+    width: 100%;
+    cursor: pointer;
+    align-items: center;
+    gap: 0.75rem;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    font-size: 0.875rem;
+    transition-property: background-color;
+    transition-duration: 200ms;
+
+    &:hover {
+        background-color: var(--backgroud-hover);
+    }
+
+    .prompt-name {
+        position: relative;
+        max-height: 1.25rem;
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-break: break-all;
+        padding-right: 1rem;
+        text-align: left;
+        font-size: 12.5px;
+        line-height: .75rem;
+    }
+}
+

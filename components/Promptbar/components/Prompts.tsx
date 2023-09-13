@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { Prompt } from '@/types/prompt';
-
+import styles from './prompts.module.scss'
 import { PromptComponent } from './Prompt';
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 
 export const Prompts: FC<Props> = ({ prompts }) => {
   return (
-    <div className="flex w-full flex-col gap-1">
+    <div className={styles['prompts']}>
       {prompts
         .slice()
         .reverse()
