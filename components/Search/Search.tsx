@@ -2,6 +2,7 @@ import { IconX } from '@tabler/icons-react';
 import { FC } from 'react';
 
 import { useTranslation } from 'next-i18next';
+import styles from './search.module.scss'
 
 interface Props {
   placeholder: string;
@@ -20,9 +21,9 @@ const Search: FC<Props> = ({ placeholder, searchTerm, onSearch }) => {
   };
 
   return (
-    <div className="relative flex items-center">
+    <div className={styles['container']}>
       <input
-        className="w-full flex-1 rounded-md border border-neutral-600 bg-[#202123] px-4 py-3 pr-10 text-[14px] leading-3 text-white"
+        className={styles['search-input']}
         type="text"
         placeholder={t(placeholder) || ''}
         value={searchTerm}

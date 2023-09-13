@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+//覆盖tailwind默认样式
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+
+::-webkit-scrollbar-track:hover {
+  background-color: #f2f2f2;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+//===============================================
+
+html {
+  background: #ffffff; //#202123
+}
+
+//相当于在移动端让<pre>标签内容保持在屏幕中央,两边留有55px的空白。
+@media (max-width: 720px) {
+  pre {
+    width: calc(100vw - 110px);
+  }
+}
+
+//含有class为codeblock的div元素的pre标签
+pre:has(div.codeblock) {
+  padding: 0;
+}
+
+@mixin light {
+  --theme: light;
+  /* color */
+  --white: white;
+  --black: rgb(48, 48, 48);
+  --purple: #8385A6;
+  --deep-purple: #454762;
+
+  --primary: #FFFFFF; // 第一主题色
+  --second: #F9F9FB; // 第二主题色
+  --highlight: #eaeaf3; //
+  --border-color:#dbdce6; //边框颜色
+
+  --seleted-color: var(--highlight); // 鼠标选中
+  --hover-color: var(--highlight); // 鼠标悬停
+  --theme-color: var(--primary); // 主题色
+
+  --backgroud: var(--second); //背景色
+  --backgroud-focus: var(--highlight);
+
+  --font-color: var(--black); //字体颜色
+
+  /* shadow */
+  --shadow: 50px 50px 100px 10px rgb(0, 0, 0, 0.1);
+  --card-shadow: 0px 2px 4px 0px rgb(0, 0, 0, 0.05);
+
+  /* stroke */
+  --border-in-light: 1.2px solid var(--border-color); //通用框
+  --border-focus: 1.2px solid var(--purple); //焦点框
+}
+
+.light {
+  @include light;
+}
+
+:root {
+  @include light;
+
+  //--window-width: 90vw;
+  //--window-height: 90vh;
+  //--sidebar-width: 300px;
+  //--window-content-width: calc(100% - var(--sidebar-width));
+  //--message-max-width: 80%;
+  //--full-height: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+  :root {
+    //--window-width: 100vw;
+    //--window-height: var(--full-height);
+    //--sidebar-width: 100vw;
+    //--window-content-width: var(--window-width);
+    //--message-max-width: 100%;
+  }
+
+  .no-mobile {
+    display: none;
+  }
+}
+
+

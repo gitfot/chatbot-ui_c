@@ -379,18 +379,18 @@ const Home = ({
 				<link rel="icon" href="/favicon.ico"/>
 			</Head>
 			{selectedConversation && (
-				<main className={styles.container}>
-					<div className={styles.mobileNav}>
+				<main className={styles['container']}>
+					<div className={styles['mobile-nav']}>
 						<Navbar
 							selectedConversation={selectedConversation}
 							onNewConversation={handleNewConversation}
 						/>
 					</div>
 
-					<div className={styles.windowContent}>
+					<div className={styles['window-content']}>
 						<Chatbar/>
 
-						<div className={styles.chatContainer}>
+						<div className={styles['chat-container']}>
 							<Chat stopConversationRef={stopConversationRef}/>
 						</div>
 

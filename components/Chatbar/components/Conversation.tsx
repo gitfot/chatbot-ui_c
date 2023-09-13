@@ -112,12 +112,12 @@ export const ConversationComponent = ({conversation}: Props) => {
 	}, [isRenaming, isDeleting]);
 
 	return (
-		<div className={styles.conversationItem}>
+		<div className={styles['conversation-container']}>
 			{isRenaming && selectedConversation?.id === conversation.id ? (
-				<div className={styles.renameItem}>
+				<div className={styles['rename-item']}>
 					<IconMessage size={18}/>
 					<input
-						className={styles.renameItemInput}
+						className={styles['rename-item-input']}
 						type="text"
 						value={renameValue}
 						onChange={(e) => setRenameValue(e.target.value)}
@@ -128,9 +128,9 @@ export const ConversationComponent = ({conversation}: Props) => {
 			) : (
 
 				<button
-					className={`${styles.normalItem} ${selectedConversation?.id === conversation.id ?
-						styles.normalItemSelected : ''}
-						${messageIsStreaming ? styles.normalItemDisabled : ''}
+					className={`${styles['normal-item']} ${selectedConversation?.id === conversation.id ?
+						styles['item-selected'] : ''}
+						${messageIsStreaming ? styles['item-disabled'] : ''}
 					`}
 
 					onClick={() => handleSelectConversation(conversation)}
@@ -140,7 +140,7 @@ export const ConversationComponent = ({conversation}: Props) => {
 				>
 					<IconMessage size={18}/>
 					<div
-						className={`${styles.itemMessage} ${
+						className={`${styles['item-message']} ${
 							selectedConversation?.id === conversation.id ? 'pr-12' : 'pr-1'
 						}`}
 					>
@@ -151,7 +151,7 @@ export const ConversationComponent = ({conversation}: Props) => {
 
 			{(isDeleting || isRenaming) &&
 				selectedConversation?.id === conversation.id && (
-					<div className="absolute right-1 z-10 flex text-gray-300">
+					<div className={styles['sidebar-button-container']}>
 						<SidebarActionButton handleClick={handleConfirm}>
 							<IconCheck size={18}/>
 						</SidebarActionButton>
@@ -164,7 +164,7 @@ export const ConversationComponent = ({conversation}: Props) => {
 			{selectedConversation?.id === conversation.id &&
 				!isDeleting &&
 				!isRenaming && (
-					<div className="absolute right-1 z-10 flex text-gray-300">
+					<div className={styles['sidebar-button-container']}>
 						<SidebarActionButton handleClick={handleOpenRenameModal}>
 							<IconPencil size={18}/>
 						</SidebarActionButton>

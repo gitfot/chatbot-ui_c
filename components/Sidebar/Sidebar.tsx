@@ -8,6 +8,7 @@ import {
 } from './components/OpenCloseButton';
 
 import Search from '../Search';
+import styles from './sidebar.module.scss'
 
 interface Props<T> {
   isOpen: boolean;
@@ -57,11 +58,11 @@ const Sidebar = <T,>({
   return isOpen ? (
     <div>
       <div
-        className={`fixed top-0 ${side}-0 z-40 flex h-full w-[260px] flex-none flex-col space-y-2 bg-[#202123] p-2 text-[14px] transition-all sm:relative sm:top-0`}
+        className={`${styles['container']} ${side}-0`}
       >
-        <div className="flex items-center">
+        <div className={styles['chat-manage']}>
           <button
-            className="text-sidebar flex w-[190px] flex-shrink-0 cursor-pointer select-none items-center gap-3 rounded-md border border-white/20 p-3 text-white transition-colors duration-200 hover:bg-gray-500/10"
+            className={styles['create-item']}
             onClick={() => {
               handleCreateItem();
               handleSearchTerm('');
@@ -72,7 +73,7 @@ const Sidebar = <T,>({
           </button>
 
           <button
-            className="ml-2 flex flex-shrink-0 cursor-pointer items-center gap-3 rounded-md border border-white/20 p-3 text-sm text-white transition-colors duration-200 hover:bg-gray-500/10"
+            className={styles['create-folder']}
             onClick={handleCreateFolder}
           >
             <IconFolderPlus size={16} />
@@ -84,9 +85,9 @@ const Sidebar = <T,>({
           onSearch={handleSearchTerm}
         />
 
-        <div className="flex-grow overflow-auto">
+        <div className={styles['chat-list-container']}>
           {items?.length > 0 && (
-            <div className="flex border-b border-white/20 pb-2">
+            <div className={styles['chat-folder']}>
               {folderComponent}
             </div>
           )}
@@ -102,9 +103,9 @@ const Sidebar = <T,>({
               {itemComponent}
             </div>
           ) : (
-            <div className="mt-8 select-none text-center text-white opacity-50">
-              <IconMistOff className="mx-auto mb-3" />
-              <span className="text-[14px] leading-normal">
+            <div className={styles['no-data']}>
+              <IconMistOff className={styles['no-data-icon']} />
+              <span className={styles['no-data-text']}>
                 {t('No data.')}
               </span>
             </div>

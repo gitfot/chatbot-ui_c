@@ -14,7 +14,7 @@ interface Props {
  */
 export const Conversations = ({conversations}: Props) => {
 	return (
-		<div className={styles.conversations}>
+		<div className={styles['conversations']}>
 			{conversations
 				//过滤出没有folderId的对话
 				.filter((conversation) => !conversation.folderId)

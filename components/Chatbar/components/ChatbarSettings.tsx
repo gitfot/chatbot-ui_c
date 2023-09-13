@@ -11,8 +11,8 @@ import { Import } from '../../Settings/Import';
 import { Key } from '../../Settings/Key';
 import { SidebarButton } from '../../Sidebar/SidebarButton';
 import ChatbarContext from '../Chatbar.context';
-import { ClearConversations } from './ClearConversations';
 import { PluginKeys } from './PluginKeys';
+import styles from './chatbar-settings.module.scss'
 
 export const ChatbarSettings = () => {
   const { t } = useTranslation('sidebar');
@@ -30,17 +30,16 @@ export const ChatbarSettings = () => {
   } = useContext(HomeContext);
 
   const {
-    handleClearConversations,
     handleImportConversations,
     handleExportData,
     handleApiKeyChange,
   } = useContext(ChatbarContext);
 
   return (
-    <div className="flex flex-col items-center space-y-1 border-t border-white/20 pt-1 text-sm">
-      {conversations.length > 0 ? (
+    <div className={styles['container']}>
+      {/*{conversations.length > 0 ? (
         <ClearConversations onClearConversations={handleClearConversations} />
-      ) : null}
+      ) : null}*/}
 
       <Import onImport={handleImportConversations} />
 

@@ -1,0 +1,8 @@
+.sidebar-action-button {
+    min-width: 20px;
+    padding: 0.25rem;
+    color: var(--purple);
+    &:hover {
+        color: var(--deep-purple);
+    }
+}

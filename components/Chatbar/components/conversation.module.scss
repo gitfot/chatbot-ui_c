@@ -1,39 +1,39 @@
-.conversationItem {
+.conversation-container {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-.renameItem {
+.rename-item {
     display: flex;
     width: 100%;
     align-items: center;
     gap: 0.75rem;
     border-radius: 0.5rem;
-    background-color: rgba(254, 254, 255, 0.9);
+    background-color: var(--backgroud-focus);
     padding: 0.75rem;
 }
 
-.renameItemInput {
+.rename-item-input {
     margin-right: 3rem;
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
-    border-color: rgb(163 163 163 / 1);
+    border-color: var(--border-color);
     background-color: transparent;
     text-align: left;
     font-size: 12.5px;
     line-height:  .75rem;
-    color: rgb(52 53 65 / 0.9);;
+    color: var(--black);
     outline: 2px solid transparent;
     outline-offset: 2px;
 
     &:focus {
-        border-color: #d4d4d8;
+        border-color: var(--backgroud-focus);
     }
 }
 
-.normalItem {
+.normal-item {
     display: flex;
     width: 100%;
     cursor: pointer;
@@ -49,19 +49,19 @@
     transition-duration: 150ms;
 
     &:hover {
-        background-color: rgb(52 53 65 / 0.9);; //rgb(52 53 65 / 0.9);
+        background-color: var(--backgroud-focus); //rgb(52 53 65 / 0.9);
     }
 }
 
-.normalItemSelected {
-    background-color: rgb(52 53 65 / 0.9);;
+.item-selected {
+    background-color: var(--backgroud-focus);
 }
 
-.normalItemDisabled {
+.item-disabled {
     cursor: not-allowed;
 }
 
-.itemMessage {
+.item-message {
     position: relative;
     max-height: 1.25rem;
     flex: 1 1 0;
@@ -74,7 +74,15 @@
     line-height: 0.75rem;;
 }
 
-.deleteItemSelected {
+.sidebar-button-container {
+    position: absolute;
+    right: 0.25rem;
+    z-index: 10;
+    display: flex;
+    //color: var(--purple);
+}
+
+.delete-item-selected {
     padding-right: 12px;
 }
 
