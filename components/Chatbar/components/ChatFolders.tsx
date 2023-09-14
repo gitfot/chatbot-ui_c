@@ -6,7 +6,7 @@ import HomeContext from '@/pages/api/home/home.context';
 
 import Folder from '@/components/Folder';
 
-import { ConversationComponent } from './Conversation';
+import {Conversation} from './Conversation';
 
 interface Props {
   searchTerm: string;
@@ -37,7 +37,7 @@ export const ChatFolders = ({ searchTerm }: Props) => {
           if (conversation.folderId === currentFolder.id) {
             return (
               <div key={index} className="ml-5 gap-2 border-l pl-2">
-                <ConversationComponent conversation={conversation} />
+                <Conversation conversation={conversation} />
               </div>
             );
           }
