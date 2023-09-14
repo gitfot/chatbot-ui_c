@@ -24,19 +24,18 @@ export const Conversations = ({conversations}: Props) => {
 		],
 	);
 
+	//拖动会话窗格
 	const onDragEnd: OnDragEndResponder = (result) => {
 		const {destination, source} = result;
 		if (!destination) {
 			return;
 		}
-
 		if (
 			destination.droppableId === source.droppableId &&
 			destination.index === source.index
 		) {
 			return;
 		}
-
 		moveSession(source.index, destination.index);
 	};
 
