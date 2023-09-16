@@ -2,7 +2,6 @@
     position: relative;
     display: flex;
     align-items: center;
-    margin-top: 1px;
 }
 
 .rename-item {
@@ -40,7 +39,9 @@
     padding: 0.75rem;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    transition-property:background-color;
+
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
 
     &:hover {

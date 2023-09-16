@@ -14,7 +14,7 @@ import {
 	useState,
 } from 'react';
 
-import {Conversation as ConversationType} from '@/types/chat';
+import {Conversation} from '@/types/chat';
 
 import HomeContext from '@/pages/api/home/home.context';
 
@@ -23,7 +23,7 @@ import ChatbarContext from '@/components/Chatbar/Chatbar.context';
 import styles from './conversation.module.scss'
 
 interface Props {
-	conversation: ConversationType;
+	conversation: Conversation;
 }
 
 /**
@@ -31,7 +31,7 @@ interface Props {
  * @param conversation
  * @constructor
  */
-export const Conversation = ({conversation}: Props) => {
+export const ConversationComponent = ({conversation}: Props) => {
 	const {
 		state: {selectedConversation, messageIsStreaming},
 		handleSelectConversation,
@@ -58,14 +58,14 @@ export const Conversation = ({conversation}: Props) => {
 	 */
 	const handleDragStart = (
 		e: DragEvent<HTMLButtonElement>,
-		conversation: ConversationType,
+		conversation: Conversation,
 	) => {
 		if (e.dataTransfer) {
 			e.dataTransfer.setData('conversation', JSON.stringify(conversation));
 		}
 	};
 
-	const handleRename = (conversation: ConversationType) => {
+	const handleRename = (conversation: Conversation) => {
 		if (renameValue.trim().length > 0) {
 			handleUpdateConversation(conversation, {
 				key: 'name',
@@ -159,8 +159,7 @@ export const Conversation = ({conversation}: Props) => {
 							<IconX size={18}/>
 						</SidebarActionButton>
 					</div>
-				)
-			}
+				)}
 
 			{selectedConversation?.id === conversation.id &&
 				!isDeleting &&
@@ -173,8 +172,7 @@ export const Conversation = ({conversation}: Props) => {
 							<IconTrash size={18}/>
 						</SidebarActionButton>
 					</div>
-				)
-			}
+				)}
 		</div>
 	);
 };
