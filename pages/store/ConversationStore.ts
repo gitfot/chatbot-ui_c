@@ -11,18 +11,18 @@ export interface RequestMessage {
 	content: string;
 }
 
-export interface ConversationSession {
+export interface ChatSession {
 	id: string;
 	topic: string;
 	memoryPrompt: string;
-	messages: ConversationMessage[];
-	stat: ConversationStat;
+	messages: ChatMessage[];
+	stat: ChatStat;
 	lastUpdate: number;
 	lastSummarizeIndex: number;
 	clearContextIndex?: number;
 }
 
-export interface ConversationStat {
+export interface ChatStat {
 	tokenCount: number;
 	wordCount: number;
 	charCount: number;
@@ -32,7 +32,7 @@ export interface ConversationStat {
  * 声明一个消息结构类型
  * 注意：RequestMessage是请求openai接口所需要的结构
  */
-export type ConversationMessage = RequestMessage & {
+export type ChatMessage = RequestMessage & {
 	date: string;
 	streaming?: boolean;
 	isError?: boolean;
@@ -41,24 +41,24 @@ export type ConversationMessage = RequestMessage & {
 };
 
 interface ConversationStore {
-	sessions: ConversationSession[];
+	sessions: ChatSession[];
 	currentSessionIndex: number;
 	clearSessions: () => void;
 	moveSession: (from: number, to: number) => void;
 	selectSession: (index: number) => void;
 	newSession: () => void;
 	deleteSession: (index: number) => void;
-	currentSession: () => ConversationSession;
+	currentSession: () => ChatSession;
 	nextSession: (delta: number) => void;
-	onNewMessage: (message: ConversationMessage) => void;
-	updateCurrentSession: (updater: (session: ConversationSession) => void) => void;
+	onNewMessage: (message: ChatMessage) => void;
+	updateCurrentSession: (updater: (session: ChatSession) => void) => void;
 	updateMessage: (
 		sessionIndex: number,
 		messageIndex: number,
-		updater: (message?: ConversationMessage) => void,
+		updater: (message?: ChatMessage) => void,
 	) => void;
 	resetSession: () => void;
-	getMemoryPrompt: () => ConversationMessage;
+	getMemoryPrompt: () => ChatMessage;
 
 	clearAllData: () => void;
 }
@@ -68,7 +68,7 @@ export const DEFAULT_TOPIC = Locale.Store.DefaultTopic;
 /**
  * 创建一个默认会话窗口
  */
-function createEmptySession(): ConversationSession {
+function createEmptySession(): ChatSession {
 	return {
 		id: nanoid(),
 		topic: DEFAULT_TOPIC,
@@ -83,6 +83,7 @@ function createEmptySession(): ConversationSession {
 		lastSummarizeIndex: 0,
 	};
 }
+
 
 /**
  * 对话窗口store
@@ -211,16 +212,15 @@ export const useConversationStore = create<ConversationStore>()(
 			},
 
 			//发送新消息时更新session信息
-			onNewMessage() {
+			onNewMessage(message) {
 				get().updateCurrentSession((session) => {
 					session.messages = session.messages.concat(); //数组拷贝
 					session.lastUpdate = Date.now();
 				});
 			},
-
-			//获取历史聊天总结，作为前情提要
 			getMemoryPrompt() {
 				const session = get().currentSession();
+
 				return {
 					role: "system",
 					content:
@@ -228,14 +228,13 @@ export const useConversationStore = create<ConversationStore>()(
 							? Locale.Store.Prompt.History(session.memoryPrompt)
 							: "",
 					date: "",
-				} as ConversationMessage;
+				} as ChatMessage;
 			},
 
-			//更新消息
 			updateMessage(
 				sessionIndex: number,
 				messageIndex: number,
-				updater: (message?: ConversationMessage) => void,
+				updater: (message?: ChatMessage) => void,
 			) {
 				const sessions = get().sessions;
 				const session = sessions.at(sessionIndex);
