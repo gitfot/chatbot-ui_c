@@ -117,35 +117,6 @@ export const Chatbar = () => {
 	};
 
 	/**
-	 * 清空所有对话窗口（已废弃）
-	 */
-	const handleClearConversations = () => {
-		defaultModelId &&
-		homeDispatch({
-			field: 'selectedConversation',
-			value: {
-				id: uuidv4(),
-				name: t('New Conversation'),
-				messages: [],
-				model: OpenAIModels[defaultModelId],
-				prompt: DEFAULT_SYSTEM_PROMPT,
-				temperature: DEFAULT_TEMPERATURE,
-				folderId: null,
-			},
-		});
-
-		homeDispatch({field: 'conversations', value: []});
-
-		localStorage.removeItem('conversationHistory');
-		localStorage.removeItem('selectedConversation');
-
-		const updatedFolders = folders.filter((f) => f.type !== 'chat');
-
-		homeDispatch({field: 'folders', value: updatedFolders});
-		saveFolders(updatedFolders);
-	};
-
-	/**
 	 * 删除一个对话框
 	 * @param conversation
 	 */
@@ -237,6 +208,7 @@ export const Chatbar = () => {
 				addItemButtonTitle={t('New chat')}
 				itemComponent={<Conversations conversations={filteredConversations}/>}
 				folderComponent={<ChatFolders searchTerm={searchTerm}/>}
+				folders={folders}
 				items={filteredConversations}
 				searchTerm={searchTerm}
 				handleSearchTerm={(searchTerm: string) =>
@@ -244,7 +216,7 @@ export const Chatbar = () => {
 				}
 				toggleOpen={handleToggleChatbar}
 				handleCreateItem={handleNewConversation}
-				handleCreateFolder={() => handleCreateFolder(t('New folder'), 'chat')}
+				handleCreateFolder={() => handleCreateFolder(t('New folder'))}
 				handleDrop={handleDrop}
 				footerComponent={<ChatbarSettings/>}
 			/>

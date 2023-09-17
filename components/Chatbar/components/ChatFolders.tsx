@@ -7,6 +7,7 @@ import HomeContext from '@/pages/api/home/home.context';
 import Folder from '@/components/Folder';
 
 import { ConversationComponent } from './Conversation';
+import styles from './chat-folders.module.scss'
 
 interface Props {
   searchTerm: string;
@@ -46,9 +47,8 @@ export const ChatFolders = ({ searchTerm }: Props) => {
   };
 
   return (
-    <div className="flex w-full flex-col pt-2">
+    <div className={styles['container']}>
       {folders
-        .filter((folder) => folder.type === 'chat')
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((folder, index) => (
           <Folder

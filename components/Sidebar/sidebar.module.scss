@@ -32,11 +32,12 @@
     border-radius: 0.375rem;
     border: var(--border-in-light);
     padding: 0.75rem;
-    font-size: 16px;
+    font-size: 15px;
     height: 44px;
     color: var(--font-color);
     transition: background-color 0.2s;
     align-items: center;
+    justify-content: center;
     background-color: var(--backgroud);
     &:hover {
         background-color: var(--backgroud-hover);
@@ -46,6 +47,9 @@
 .chat-manage {
     display: flex;
     align-items: center;
+    //border-bottom: var(--border-in-light);
+    //padding-bottom: 1rem;
+    padding-top: 1.5rem;
     //创建新的聊天
     .create-item {
         @include sidebarButton;
@@ -64,12 +68,11 @@
 .chat-list-container {
     flex-grow: 1;
     overflow: auto;
-    border-top: var(--border-in-light);
 
     .chat-folder {
         display: flex;
-        border-bottom: var(--border-in-light);
         padding-bottom: 0.5rem;
+        border-bottom: var(--border-in-light);
     }
 
     // 拖放区域样式

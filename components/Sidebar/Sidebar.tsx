@@ -1,5 +1,5 @@
 import {IconFolderPlus, IconMistOff, IconPlus} from '@tabler/icons-react';
-import {ReactNode} from 'react';
+import {ReactNode, useContext} from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {
@@ -9,12 +9,15 @@ import {
 
 import Search from '../Search';
 import styles from './sidebar.module.scss'
+import HomeContext from "@/pages/api/home/home.context";
+import {FolderInterface} from "@/types/folder";
 
 interface Props<T> {
 	isOpen: boolean;
 	addItemButtonTitle: string;
 	side: 'left' | 'right';
 	items: T[];
+	folders: FolderInterface[];
 	itemComponent: ReactNode;
 	folderComponent: ReactNode;
 	footerComponent?: ReactNode;
@@ -33,8 +36,8 @@ const Sidebar = <T, >({
 	                      items,
 	                      itemComponent,
 	                      folderComponent,
+	                      folders,
 	                      footerComponent,
-	                      searchTerm,
 	                      handleSearchTerm,
 	                      toggleOpen,
 	                      handleCreateItem,
@@ -79,18 +82,13 @@ const Sidebar = <T, >({
 						<IconFolderPlus size={16}/>
 					</button>
 				</div>
-				<Search
-					placeholder={t('Search...') || ''}
-					searchTerm={searchTerm}
-					onSearch={handleSearchTerm}
-				/>
 
 				<div className={styles['chat-list-container']}>
-					{items?.length > 0 && (
+					{folders?.length > 0 && (
 						<div className={styles['chat-folder']}>
 							{folderComponent}
-						</div>
-					)}
+						</div>)
+					}
 
 					{items?.length > 0 ? (
 						<div

@@ -27,7 +27,7 @@ import {getSettings} from '@/utils/app/settings';
 
 import {Conversation} from '@/types/chat';
 import {KeyValuePair} from '@/types/data';
-import {FolderInterface, FolderType} from '@/types/folder';
+import {FolderInterface} from '@/types/folder';
 import {OpenAIModelID, OpenAIModels, fallbackModelID} from '@/types/openai';
 import {Prompt} from '@/types/prompt';
 
@@ -115,11 +115,10 @@ const Home = ({
 
 	// FOLDER OPERATIONS  --------------------------------------------
 
-	const handleCreateFolder = (name: string, type: FolderType) => {
+	const handleCreateFolder = (name: string) => {
 		const newFolder: FolderInterface = {
 			id: uuidv4(),
 			name,
-			type,
 		};
 
 		const updatedFolders = [...folders, newFolder];
@@ -394,7 +393,7 @@ const Home = ({
 							<Chat stopConversationRef={stopConversationRef}/>
 						</div>
 
-						<Promptbar/>
+						{/*<Promptbar/>*/}
 					</div>
 				</main>
 			)}
